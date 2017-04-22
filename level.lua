@@ -16,7 +16,7 @@ function levelClass:draw()
 end
 
 function levelClass:update(dt)
-    width, height = love.graphics.getDimensions()   
+    w, h = love.graphics.getDimensions()   
     if w < 500 or h < 500 then
         self.backgroundR = 100
         self.backgroundG = 100
