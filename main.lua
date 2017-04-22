@@ -1,10 +1,10 @@
 local entities = {}
+local Level = require('level')
 local Player = require('player')
-local touching = false
 
-local level = Level
-local player = Player(400, 400)
-local window = Window
+local level = Level(0, 0, 0)
+local player = Player(400, 400, 1)
+table.insert(entities, level)
 table.insert(entities, player)
 
 -- is a inside b?
@@ -27,31 +27,20 @@ end
 
 function love.draw()
     love.window.setTitle('you are your own worst enemy')
-    love.graphics.setBackgroundColor(255, 0, 0)
     for idx, entity in ipairs(entities) do
         entity:draw()
-    end
-    width, height = love.graphics.getDimensions()
-    if w < 200 or h < 200 then
-        print('you lose')
-        love.graphics.clear(255,0,255)
-    else
-        love.resize(w, h)
     end
 end
 
 function love.update(dt)
+    width, height = love.graphics.getDimensions()
+    w = width - 10
+    h = height - 10
+    if not (w < 200 or h < 200) then
+        love.resize(w, h)
+    end
     for idx, entity in ipairs(entities) do
         entity:update(dt)
-    end
-    width, height = love.graphics.getDimensions()
-    w = width - 1
-    h = height - 1
-    if w < 200 or h < 200 then
-        print('you lose')
-        -- love.graphics.clear(255,0,255)
-    else
-        love.resize(w, h)
     end
 end
 
