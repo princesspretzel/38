@@ -7,7 +7,7 @@ local entities = { }
 width, height = love.graphics.getDimensions()
 shrinkRate = 1
 chosen = ''
-errorMargin = 20
+errorMargin = 10
 
 --id, chosen, colorinfo, vertices
 local topTriangle = Triangle('top', false, 150,200,200, 0,0,width,0,width/2,height/2)
@@ -32,7 +32,7 @@ table.insert(entities, bottomFortune)
 level = Level(0, 0, 0)
 table.insert(entities, level)
 
-player = Player(400, 400, 1)
+player = Player(width/2, height/2, 1)
 table.insert(entities, player)
 
 music = love.audio.newSource('/audio/gamemusic.mp3')
@@ -88,30 +88,28 @@ function love.update(dt)
 
     if chosen == '' then
         for idx, entity in ipairs(entities) do
-            if entity.text then                
-                if player.x >= entity.x-errorMargin and player.x <= entity.x+errorMargin then
-                    xTouching = true
-                end
-                if player.y >= entity.y-errorMargin and player.y <= entity.y+errorMargin then
-                    yTouching = true
-                end
-
-                if xTouching and yTouching then
+            if entity.text then  
+                local touch = isTouching(player, entity)
+                if touch then
+                    print("player position x: ", player.x)
+                    print("player position y: ", player.y)
+                    print("entity position x: ", entity.x)
+                    print("entity position y: ", entity.y)
                     chosen = entity.id
                     return
                 end
             end
         end
-    -- else
-    --     for idx, entity in ipairs(entities) do
-    --         if entity.chosen then
-    --             --triangle and fortune IDs match
-    --             if entity.id == chosen then
-    --                 entity.chosen = true
-    --                 print('entity ID: ', entity.id)
-    --             end
-    --         end
-    --     end
+    else
+        for idx, entity in ipairs(entities) do
+            -- this is gross, is there a better identification method?
+            if (entity.x3 and entity.y3) then
+                if entity.id == chosen then
+                    entity.chosen = true
+                    print('entity ID: ', entity.id)
+                end
+            end
+        end
     end
 
     for idx, entity in ipairs(entities) do

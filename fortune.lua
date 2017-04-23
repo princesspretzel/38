@@ -2,9 +2,14 @@ local fortuneClass = { }
 fortuneClass.__index = fortuneClass
 
 function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOffset, cR, cG, cB)
+    -- no clue why this doesn't work
+    -- textWidth = text:getWidth( )
+    -- textHeight = text:getHeight( )
     local instance = {
         id = id,
         text = text,
+        w = 20,
+        h = 5,
         x = x,
         xConstant = xConstant,
         xMod = xMod,
