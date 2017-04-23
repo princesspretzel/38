@@ -8,7 +8,7 @@ function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOff
     local instance = {
         id = id,
         text = text,
-        w = 20,
+        w = 70,
         h = 5,
         x = x,
         xConstant = xConstant,
@@ -27,14 +27,16 @@ function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOff
 end
 
 function fortuneClass:draw()
-    love.graphics.setColor(self['cR'], self['cG'], self['cB'], 255)
-    love.graphics.print(self['text'], self['x'], self['y'], 0, 1, 1)
+    if ((chosen == '') or (chosen == self.id)) then
+        love.graphics.setColor(self['cR'], self['cG'], self['cB'], 255)
+        love.graphics.print(self['text'], self['x'], self['y'], 0, 1, 1)
+    end
 end
 
 function fortuneClass:update(dt)
-    local width, height = love.graphics.getDimensions()
     local w = width
     local h = height
+
     if self.xMod == true then
         w = width/2
     end
