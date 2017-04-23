@@ -39,8 +39,8 @@ function playerClass:isOutOfBounds()
         w = width,
         h = height
     }
-    local i = isInside(self, window)
-    return not i
+    local edge, inside = isInside(self, window)
+    return edge, not inside
 end
 
 function playerClass:draw()
@@ -66,9 +66,21 @@ function playerClass:update(dt)
         dy = -1
     end
 
-    if self:isOutOfBounds() then
-        self.x = self.x - shrinkRate
-        self.y = self.y - shrinkRate
+    edge, inside = self:isOutOfBounds()
+    print('edge: ', edge)
+    if inside then
+        if edge == 'top' then
+            self.y = self.y + shrinkRate*2
+        end
+        if edge == 'left' then
+            self.x = self.x + shrinkRate*2
+        end
+        if edge == 'right' then
+            self.x = self.x - shrinkRate*3
+        end
+        if edge == 'bottom' then
+            self.y = self.y - shrinkRate*3
+        end
     end
 
     if dx ~= 0 or dy ~= 0 then
@@ -79,7 +91,7 @@ function playerClass:update(dt)
         self.x = self.x + dx
         self.y = self.y + dy
 
-        if self:isOutOfBounds() then
+        if inside then
             self.x = self.x - dx
             self.y = self.y - dy
         end

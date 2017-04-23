@@ -44,20 +44,25 @@ table.insert(entities, player)
 
 -- is a inside b?
 function isInside(a, b)
+    local edge = ''
     local inside = true
     if a.x <= b.x then
+        edge = 'left'
         inside = false
     end
     if (a.x + a.w) >= (b.x + b.w) then
+        edge = 'right'
         inside = false
     end
     if a.y <= b.y then
+        edge = 'top'
         inside = false
     end
     if (a.y + a.h) >= (b.y + b.h) then
+        edge = 'bottom'
         inside = false
     end
-    return inside
+    return edge, inside
 end
 
 -- are a and b touching?
