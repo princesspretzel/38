@@ -27,6 +27,20 @@ end
 function triangleClass:update(dt)
     local width, height = love.graphics.getDimensions()
 
+    if not (self.x1 == 0) then
+        self.x1 = width
+    end   
+    if not (self.y1 == 0) then
+        self.y1 = height
+    end
+
+    if not (self.x2 == 0) then
+        self.x2 = width
+    end   
+    if not (self.y2 == 0) then
+        self.y2 = height
+    end
+
     self.x3 = width/2
     self.y3 = height/2
 
