@@ -3,7 +3,7 @@ levelClass.__index = levelClass
 
 function Level(bR, bG, bB)
     local instance = {
-        title = 'choose yr misfortune',
+        title = 'what bad thing will happen to you today?',
         backgroundR = 0,
         backgroundG = 0,
         backgroundB = 0
@@ -20,7 +20,7 @@ end
 function levelClass:update(dt)
     w, h = love.graphics.getDimensions()
     if w < 600 or h < 600 then
-        self.title = 'prepare for the shrinkage'
+        self.title = 'prepare for the takeover of your small small world'
         self.backgroundR = 30
         self.backgroundG = 50
         self.backgroundB = 70        
@@ -38,7 +38,7 @@ function levelClass:update(dt)
         self.backgroundB = 170
     end
     if w < 300 or h < 300 then
-        self.title = 'it\'s taken over your small small world'
+        self.title = 'it\'s all there is'
         self.backgroundR = 250
         self.backgroundG = 230
         self.backgroundB = 210
