@@ -3,7 +3,7 @@ playerClass.__index = playerClass
 
 function Player(x, y)
     img = love.graphics.newImage('/images/skellyp.png')
-    width, height = img:getDimensions( )
+    local width, height = img:getDimensions( )
     local instance = {
         x = x,
         y = y,
@@ -25,12 +25,14 @@ function playerClass:isOutOfBounds()
         h = height
     }
     local i = isInside(self, window)
-    print('is inside?', i)
     return not i
 end
 
 function playerClass:draw()
-    love.graphics.draw(self.image, self.x, self.y)
+    w, h = love.graphics.getDimensions() 
+    if not (w < 200 and h < 200) then
+        love.graphics.draw(self.image, self.x, self.y)
+    end
 end
 
 function playerClass:update(dt)
@@ -48,27 +50,25 @@ function playerClass:update(dt)
     if love.keyboard.isDown('up') then
         dy = -1
     end
-    if love.keyboard.isDown('return') then
-        love.window.close()
+
+    if self:isOutOfBounds() then
+        self.x = self.x - shrinkRate
+        self.y = self.y - shrinkRate
     end
 
     if dx ~= 0 or dy ~= 0 then
         local length = (dx^2+dy^2)^.5
-        dx = dx/length * self.speed*dt * 2
-        dy = dy/length * self.speed*dt * 2
+        dx = dx/length * self.speed*dt
+        dy = dy/length * self.speed*dt
 
         self.x = self.x + dx
         self.y = self.y + dy
 
         if self:isOutOfBounds() then
-            print('out of bounds')
-            love.graphics.print('out of bounds', 100, 100)
-            love.graphics.clear(255,0,255)
-            -- self.x = self.x - dx
-            -- self.y = self.y - dy
+            self.x = self.x - dx
+            self.y = self.y - dy
         end
     end
 end
 
 return Player
-
