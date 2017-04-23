@@ -6,6 +6,7 @@ local Triangle = require('triangle')
 local entities = { }
 start = love.timer.getTime()
 current = ''
+foundSecret = false
 
 width, height = love.graphics.getDimensions()
 shrinkRate = 1
@@ -104,6 +105,18 @@ function love.update(dt)
     if not ended then
         for idx, entity in ipairs(entities) do
             entity:update(dt)
+            
+            if player then 
+                if player:eggCream() then
+                    local img = love.graphics.newImage('/images/icecreamt.png')
+                    local iWidth, iHeight = img:getDimensions( )
+                    player.image = img
+                    player.w = iWidth
+                    player.h = iHeight 
+                    foundSecret = true
+                end
+            end
+
             if chosen == '' then
                 -- yucky way to determine if entity is a Fortune
                 if entity.text then
@@ -122,7 +135,7 @@ function love.update(dt)
                         entity.chosen = true
                     end
                 end
-                if player then
+                if (player and (not foundSecret)) then
                     local i = player:chooseImage(chosen)
                     local img = love.graphics.newImage(i)
                     local iWidth, iHeight = img:getDimensions( )

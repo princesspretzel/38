@@ -43,6 +43,17 @@ function playerClass:isOutOfBounds()
     return edge, not inside
 end
 
+function playerClass:eggCream()
+    local secretSpot = {
+        x = width - 100,
+        y = height - 100,
+        w = 100,
+        h = 100
+    }
+    local inside = isTouching(self, secretSpot)
+    return inside
+end
+
 function playerClass:draw()
     w, h = love.graphics.getDimensions() 
     if not (w < 200 and h < 200) then

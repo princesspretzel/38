@@ -25,6 +25,9 @@ function levelClass:update(dt)
         else
             self.title = 'prepare for the takeover of your small small world'
         end
+        if foundSecret then
+            self.title = 'this will take the edge off'
+        end
         self.backgroundR = 255        
         self.backgroundG = 102
         self.backgroundB = 255
@@ -34,6 +37,9 @@ function levelClass:update(dt)
             self.title = 'don\'t make a big deal'
         else
             self.title = 'is it getting stuffy in here or wut'
+        end
+        if foundSecret then
+            self.title = 'tastes good enough to forget'
         end
         self.backgroundR = 255        
         self.backgroundG = 102
@@ -45,6 +51,9 @@ function levelClass:update(dt)
         else
             self.title = 'it\'s coming'
         end
+        if foundSecret then
+            self.title = 'i\'m melting'
+        end
         self.backgroundR = 255        
         self.backgroundG = 102
         self.backgroundB = 255
@@ -54,6 +63,9 @@ function levelClass:update(dt)
             self.title = 'it\'s here'
         else
             self.title = 'some choices are made for us'
+        end
+        if foundSecret then
+            self.title = 'nothing lasts'
         end
         self.backgroundR = 255        
         self.backgroundG = 255
