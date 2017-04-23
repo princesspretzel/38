@@ -7,6 +7,7 @@ function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOff
     -- textHeight = text:getHeight( )
     local instance = {
         id = id,
+        speed = 5,
         text = text,
         w = 70,
         h = 5,
@@ -27,8 +28,8 @@ function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOff
 end
 
 function fortuneClass:chase(x, y)
-    local moveX = love.math.random(50)
-    local moveY = love.math.random(50)
+    local moveX = self.speed
+    local moveY = self.speed
 
     yDiff = math.abs(self.y - y)
     xDiff = math.abs(self.x - x)
@@ -46,10 +47,6 @@ function fortuneClass:chase(x, y)
             self.x = self.x + moveX
         end
     end
-    print('player x: ', x)
-    print('player y: ', y)
-    print('self x: ', self.x)
-    print('self y: ', self.y)
 end
 
 function fortuneClass:draw()
@@ -60,22 +57,24 @@ function fortuneClass:draw()
 end
 
 function fortuneClass:update(dt)
-    local w = width
-    local h = height
-    local chaser = chosen
+    if chosen == '' then
+        local w = width
+        local h = height
+        local chaser = chosen
 
-    if self.xMod == true then
-        w = width/2
-    end
-    if not self.xConstant then
-        self.x = w + self.xOffset
-    end
+        if self.xMod == true then
+            w = width/2
+        end
+        if not self.xConstant then
+            self.x = w + self.xOffset
+        end
 
-    if self.yMod == true then
-        h = height/2
-    end
-    if not self.yConstant then
-        self.y = h + self.yOffset
+        if self.yMod == true then
+            h = height/2
+        end
+        if not self.yConstant then
+            self.y = h + self.yOffset
+        end
     end
 end
 

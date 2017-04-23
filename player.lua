@@ -51,7 +51,6 @@ function playerClass:draw()
 end
 
 function playerClass:update(dt)
-
     local dx, dy = 0, 0    
 
     if love.keyboard.isDown('left') then
