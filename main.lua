@@ -91,6 +91,7 @@ function love.update(dt)
     for idx, entity in ipairs(entities) do
         entity:update(dt)
         if chosen == '' then
+            -- yucky way to determine if entity is a Fortune
             if entity.text then
                 local touch = isTouching(player, entity)
                 if touch then
@@ -99,6 +100,7 @@ function love.update(dt)
                 end
             end
         else
+            -- yucky way to determine if entity is a Fortune
             if (entity.x3 and entity.y3) then
                 if entity.id == chosen then
                     entity.chosen = true
