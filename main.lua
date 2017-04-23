@@ -103,7 +103,6 @@ function love.update(dt)
                     player.x = width/2
                     player.y = height/2
                     chosen = entity.id
-                    return
                 end
             end
         else
@@ -125,14 +124,13 @@ function love.update(dt)
                 local touch = isTouching(player, entity)
                 if touch then
                     ended = true
-                    return
                 else
                     entity:chase(player.x, player.y)
                 end
             end
         end
     end
-
+    --don't know why I need to restate this here
     width, height = love.graphics.getDimensions()
     w = width - shrinkRate
     h = height - shrinkRate
