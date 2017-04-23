@@ -7,6 +7,7 @@ local entities = { }
 width, height = love.graphics.getDimensions()
 shrinkRate = 1
 chosen = ''
+ended = false
 errorMargin = 10
 
 --id, chosen, colorinfo, vertices
@@ -81,7 +82,7 @@ function love.load()
 end
 
 function love.draw()
-    if not (w < 200 or h < 200) then
+    if not (w < 200 or h < 200) and not ended then
         for idx, entity in ipairs(entities) do
             entity:draw()
         end
@@ -98,6 +99,9 @@ function love.update(dt)
             if entity.text then
                 local touch = isTouching(player, entity)
                 if touch then
+                    -- move player away after the choice is made
+                    player.x = width/2
+                    player.y = height/2
                     chosen = entity.id
                     return
                 end
@@ -109,16 +113,24 @@ function love.update(dt)
                     entity.chosen = true
                 end
             end
-            if entity.image then
-                local i = entity:chooseImage(chosen)
+            if player then
+                local i = player:chooseImage(chosen)
                 local img = love.graphics.newImage(i)
                 local iWidth, iHeight = img:getDimensions( )
-                entity.image = img
-                entity.w = iWidth
-                entity.h = iHeight
+                player.image = img
+                player.w = iWidth
+                player.h = iHeight
+            end
+            if entity.text and (entity.id == chosen) then
+                local touch = isTouching(player, entity)
+                if touch then
+                    ended = true
+                    return
+                end
             end
         end
     end
+
     width, height = love.graphics.getDimensions()
     w = width - shrinkRate
     h = height - shrinkRate

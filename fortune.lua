@@ -26,6 +26,25 @@ function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOff
     return instance
 end
 
+function fortuneClass:chase()
+    local moveX = love.math.random(20)
+    local moveY = love.math.random(20)
+
+    local updown = love.math.random(0,1)
+    if updown == 0 then
+        self.y = self.y - moveY
+    else
+        self.y = self.y + moveY
+    end
+
+    local leftright = love.math.random(0,1)
+    if leftright == 0 then
+        self.x = self.x - moveX
+    else
+        self.x = self.x + moveX
+    end
+end
+
 function fortuneClass:draw()
     if ((chosen == '') or (chosen == self.id)) then
         love.graphics.setColor(self['cR'], self['cG'], self['cB'], 255)
@@ -36,6 +55,7 @@ end
 function fortuneClass:update(dt)
     local w = width
     local h = height
+    local chaser = chosen
 
     if self.xMod == true then
         w = width/2
@@ -49,6 +69,10 @@ function fortuneClass:update(dt)
     end
     if not self.yConstant then
         self.y = h + self.yOffset
+    end
+
+    if (self.id == chaser) then
+        self:chase()
     end
 end
 
