@@ -21,7 +21,7 @@ end
 
 function triangleClass:draw()
     love.graphics.setColor(self['cR'], self['cG'], self['cB'], 255)
-    love.graphics.polygon('fill', self['x1'], self['y2'], self['x2'], self['y2'], self['x3'], self['y3'])
+    love.graphics.polygon('fill', self['x1'], self['y1'], self['x2'], self['y2'], self['x3'], self['y3'])
 end
 
 function triangleClass:update(dt)
@@ -33,7 +33,7 @@ function triangleClass:update(dt)
     if not (self.y1 == 0) then
         self.y1 = height
     end
-
+ 
     if not (self.x2 == 0) then
         self.x2 = width
     end   
@@ -41,16 +41,46 @@ function triangleClass:update(dt)
         self.y2 = height
     end
 
-    self.x3 = width/2
-    self.y3 = height/2
-
-    -- if self['chosen'] == true then
-    --     centerX = self['x3'] + 100
-    --     centerY = self['y3'] + 100
-
-    --     self['x3'] = centerX
-    --     self['y3'] = centerY
-    -- end
+    if chosen == '' then
+        self.x3 = width/2
+        self.y3 = height/2
+    else
+        if self.chosen == true then
+            if self.id == 'top' then
+                self.x3 = width/2
+                self.y3 = self.y3 + 10
+            end
+            if self.id == 'left' then
+                self.x3 = self.x3 + 10
+                self.y3 = height/2
+            end
+            if self.id == 'right' then
+                self.x3 = self.x3 - 10
+                self.y3 = height/2
+            end
+            if self.id == 'bottom' then
+                self.x3 = width/2
+                self.y3 = self.y3 - 10
+            end
+        else
+            if self.id == 'top' then
+                self.x3 = width/2
+                self.y3 = self.y3 - 10
+            end
+            if self.id == 'left' then
+                self.x3 = self.x3 - 10
+                self.y3 = height/2
+            end
+            if self.id == 'right' then
+                self.x3 = self.x3 + 10
+                self.y3 = height/2
+            end
+            if self.id == 'bottom' then
+                self.x3 = width/2
+                self.y3 = self.y3 + 10
+            end
+        end
+    end
 end
 
 return Triangle

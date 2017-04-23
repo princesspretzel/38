@@ -1,19 +1,19 @@
-local Triangle = require('triangle')
 local Fortune = require('fortune')
 local Level = require('level')
 local Player = require('player')
+local Triangle = require('triangle')
 
 local entities = { }
-width, height = love.graphics.getDimensions()
+local width, height = love.graphics.getDimensions()
 shrinkRate = 1
 chosen = ''
 errorMargin = 10
 
 --id, chosen, colorinfo, vertices
 local topTriangle = Triangle('top', false, 150,200,200, 0,0,width,0,width/2,height/2)
-local leftTriangle = Triangle('left', false, 127,0,255, 0,0,0,height,width/2,height/2)
-local rightTriangle = Triangle('right', false, 255,255,102, 0,height,width,height,width/2,height/2)
-local bottomTriangle = Triangle('bottom', false, 255,204,204, width,0,width,height,width/2,height/2)
+local leftTriangle = Triangle('left', false, 127,10,255, 0,height,0,0,width/2,height/2)
+local rightTriangle = Triangle('right', false, 255,204,204, width,0,width,height,width/2,height/2)
+local bottomTriangle = Triangle('bottom', false, 255,255,102, width,height,0,height,width/2,height/2)
 table.insert(entities, topTriangle)
 table.insert(entities, leftTriangle)
 table.insert(entities, rightTriangle)
@@ -34,10 +34,6 @@ table.insert(entities, level)
 
 player = Player(width/2, height/2, 1)
 table.insert(entities, player)
-
-music = love.audio.newSource('/audio/gamemusic.mp3')
-music:setLooping(true)
-music:play()
 
 -- is a inside b?
 function isInside(a, b)
@@ -65,8 +61,20 @@ function isTouching(a, b)
     if (a.y > (b.y + b.h)) or (b.y > (a.y + a.h)) then
         return false
     end
-
     return true
+end
+
+function setEndGame()
+    love.window.setTitle('u r looser')
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.print('you daed', w/2, h/2.5, 1, 2, 2)
+    love.graphics.setBackgroundColor(0, 0, 0)
+end
+
+function love.load()
+    music = love.audio.newSource('/audio/gamemusic.mp3')
+    music:setLooping(true)
+    music:play()
 end
 
 function love.draw()
@@ -75,45 +83,28 @@ function love.draw()
             entity:draw()
         end
     else
-        love.window.setTitle('u r looser')
-        love.graphics.setColor(255, 255, 255, 255)
-        love.graphics.print('you daed', w/2, h/2.5, 1, 2, 2)
-        love.graphics.setBackgroundColor(0, 0, 0)
+        setEndGame()
     end
 end
 
 function love.update(dt)
-    local xTouching = false
-    local yTouching = false
-
-    if chosen == '' then
-        for idx, entity in ipairs(entities) do
-            if entity.text then  
+    for idx, entity in ipairs(entities) do
+        entity:update(dt)
+        if chosen == '' then
+            if entity.text then
                 local touch = isTouching(player, entity)
                 if touch then
-                    print("player position x: ", player.x)
-                    print("player position y: ", player.y)
-                    print("entity position x: ", entity.x)
-                    print("entity position y: ", entity.y)
                     chosen = entity.id
                     return
                 end
             end
-        end
-    else
-        for idx, entity in ipairs(entities) do
-            -- this is gross, is there a better identification method?
+        else
             if (entity.x3 and entity.y3) then
                 if entity.id == chosen then
                     entity.chosen = true
-                    print('entity ID: ', entity.id)
                 end
             end
         end
-    end
-
-    for idx, entity in ipairs(entities) do
-        entity:update(dt)
     end
     width, height = love.graphics.getDimensions()
     w = width - shrinkRate
