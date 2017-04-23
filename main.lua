@@ -5,7 +5,7 @@ local Triangle = require('triangle')
 
 local entities = { }
 start = love.timer.getTime()
-current = ''
+current = 0
 foundSecret = false
 
 width, height = love.graphics.getDimensions()
@@ -25,7 +25,7 @@ table.insert(entities, rightTriangle)
 table.insert(entities, bottomTriangle)
 
 --id, text, x,constant,mod,offset, y,constant,mod,offset, colorinfo
-local topFortune = Fortune('top', 'lose headstart', width/2 - 50,false,true,-50, 100,true,false,0, 251,51,51)
+local topFortune = Fortune('top', 'lose headstart', width/2 - 50,false,true,-50, 100,true,false,0, 102,255,178)
 local leftFortune = Fortune('left', 'dagger in heart', 70,true,false,0, height/2,false,true,0, 0,191,255)
 local rightFortune = Fortune('right', 'infected wart', width - 170,false,false,-170, height/2,false,true,0, 230,130,210)
 local bottomFortune = Fortune('bottom', 'smelliest fart', width/2-30,false,true,-30, height - 100,false,false,-100, 204,204,255)
@@ -78,11 +78,16 @@ function isTouching(a, b)
 end
 
 function setEndGame(time)
+    ended = true
     endString = 'u r looser (lasted ' .. time .. 's)'
     love.window.setTitle(endString)
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.print('you daed', w/2, h/2.5, 1, 2, 2)
     love.graphics.setBackgroundColor(0, 0, 0)
+    music:stop()
+    endmusic = love.audio.newSource('/audio/endgame.mp3') 
+    endmusic:setLooping(true)
+    endmusic:play()
 end
 
 function love.load()

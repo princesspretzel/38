@@ -45,10 +45,10 @@ end
 
 function playerClass:eggCream()
     local secretSpot = {
-        x = width - 100,
-        y = height - 100,
-        w = 100,
-        h = 100
+        x = width - 50,
+        y = height - 50,
+        w = 50,
+        h = 50
     }
     local inside = isTouching(self, secretSpot)
     return inside
