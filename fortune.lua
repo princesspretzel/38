@@ -26,19 +26,17 @@ function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOff
     return instance
 end
 
-function fortuneClass:chase()
-    local moveX = love.math.random(20)
-    local moveY = love.math.random(20)
+function fortuneClass:chase(x, y)
+    local moveX = love.math.random(50)
+    local moveY = love.math.random(50)
 
-    local updown = love.math.random(0,1)
-    if updown == 0 then
+    if self.y > y then
         self.y = self.y - moveY
     else
         self.y = self.y + moveY
     end
 
-    local leftright = love.math.random(0,1)
-    if leftright == 0 then
+    if self.x > x then
         self.x = self.x - moveX
     else
         self.x = self.x + moveX
@@ -69,10 +67,6 @@ function fortuneClass:update(dt)
     end
     if not self.yConstant then
         self.y = h + self.yOffset
-    end
-
-    if (self.id == chaser) then
-        self:chase()
     end
 end
 

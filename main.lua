@@ -126,6 +126,8 @@ function love.update(dt)
                 if touch then
                     ended = true
                     return
+                else
+                    entity:chase(player.x, player.y)
                 end
             end
         end
