@@ -19,6 +19,9 @@ function Fortune(id, text, x, xConstant, xMod, xOffset, y, yConstant, yMod, yOff
         yConstant = yConstant,
         yMod = yMod,
         yOffset = yOffset,
+        r = 0,
+        sx = 1,
+        sy = 1,
         cR = cR,
         cG = cG,
         cB = cB
@@ -52,7 +55,7 @@ end
 function fortuneClass:draw()
     if ((chosen == '') or (chosen == self.id)) then
         love.graphics.setColor(self['cR'], self['cG'], self['cB'], 255)
-        love.graphics.print(self['text'], self['x'], self['y'], 0, 1, 1)
+        love.graphics.print(self['text'], self['x'], self['y'], self['r'], self['sx'], self['sy'])
     end
 end
 
@@ -75,6 +78,10 @@ function fortuneClass:update(dt)
         if not self.yConstant then
             self.y = h + self.yOffset
         end
+    else
+        self.r = math.random(-3,3)
+        self.sx = (math.random(5,15))/10
+        self.sy = (math.random(5,15))/10
     end
 end
 

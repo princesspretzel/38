@@ -67,7 +67,6 @@ function playerClass:update(dt)
     end
 
     edge, inside = self:isOutOfBounds()
-    print('edge: ', edge)
     if inside then
         if edge == 'top' then
             self.y = self.y + shrinkRate*2
