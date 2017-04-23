@@ -3,7 +3,10 @@ levelClass.__index = levelClass
 
 function Level(bR, bG, bB)
     local instance = {
-        title = 'choose something bad to happen'
+        title = 'choose something bad to happen',
+        backgroundR = 102,
+        backgroundG = 178,
+        backgroundB = 255
     }
     setmetatable(instance, levelClass)
     return instance
@@ -11,40 +14,56 @@ end
 
 function levelClass:draw()
     love.window.setTitle(self.title)
+    love.graphics.setBackgroundColor(self.backgroundR, self.backgroundG, self.backgroundB)
 end
 
 function levelClass:update(dt)
     w, h = love.graphics.getDimensions()
-    if w < 700 or h < 700 then
+    if w < 500 or h < 500 then
         if not (chosen == '') then
             self.title = 'excellent decision'
         else
             self.title = 'prepare for the takeover of your small small world'
-        end        
+        end
+        self.backgroundR = 255        
+        self.backgroundG = 102
+        self.backgroundB = 255
     end
-    if w < 550 or h < 550 then
+    if w < 400 or h < 400 then
         if not (chosen == '') then
-            self.title = 'don\'t make a big deal out of something so tiny'
+            self.title = 'don\'t make a big deal'
         else
             self.title = 'is it getting stuffy in here or wut'
         end
+        self.backgroundR = 255        
+        self.backgroundG = 102
+        self.backgroundB = 255
     end
-    if w < 400 or h < 400 then
+    if w < 300 or h < 300 then
         if not (chosen == '') then
             self.title = 'indecision or laziness?'
         else
             self.title = 'it\'s coming'
         end
-    end    
-    if w < 250 or h < 250 then
+        self.backgroundR = 255        
+        self.backgroundG = 102
+        self.backgroundB = 255
+    end   
+    if w < 200 or h < 200 then
         if not (chosen == '') then
             self.title = 'it\'s here'
         else
             self.title = 'some choices are made for us'
         end
+        self.backgroundR = 255        
+        self.backgroundG = 255
+        self.backgroundB = 204
     end
     if w < 100 or h < 100 then
         self.title = 'it\'s all there is'
+        self.backgroundR = 0
+        self.backgroundG = 0
+        self.backgroundB = 0
     end
 end
 
