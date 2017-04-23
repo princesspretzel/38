@@ -3,7 +3,7 @@ levelClass.__index = levelClass
 
 function Level(bR, bG, bB)
     local instance = {
-        title = 'what bad thing will happen to you today?',
+        title = 'choose something bad to happen',
         backgroundR = 0,
         backgroundG = 0,
         backgroundB = 0
@@ -20,19 +20,31 @@ end
 function levelClass:update(dt)
     w, h = love.graphics.getDimensions()
     if w < 600 or h < 600 then
-        self.title = 'prepare for the takeover of your small small world'
+        if not (chosen == '') then
+            self.title = 'excellent decision'
+        else
+            self.title = 'prepare for the takeover of your small small world'
+        end
         self.backgroundR = 30
         self.backgroundG = 50
         self.backgroundB = 70        
     end
     if w < 500 or h < 500 then
-        self.title = 'it\'s coming'
+        if not (chosen == '') then
+            self.title = 'indecision or laziness?'
+        else
+            self.title = 'it\'s coming'
+        end
         self.backgroundR = 90
         self.backgroundG = 110
         self.backgroundB = 130
     end    
     if w < 400 or h < 400 then
-        self.title = 'it\'s here'
+        if not (chosen == '') then
+            self.title = 'it\'s here'
+        else
+            self.title = 'some choices are made for us'
+        end
         self.backgroundR = 150
         self.backgroundG = 190
         self.backgroundB = 170
