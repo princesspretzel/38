@@ -30,17 +30,26 @@ function fortuneClass:chase(x, y)
     local moveX = love.math.random(50)
     local moveY = love.math.random(50)
 
-    if self.y > y then
-        self.y = self.y - moveY
-    else
-        self.y = self.y + moveY
-    end
+    yDiff = math.abs(self.y - y)
+    xDiff = math.abs(self.x - x)
 
-    if self.x > x then
-        self.x = self.x - moveX
+    if yDiff > xDiff then
+        if self.y > y then
+            self.y = self.y - moveY
+        else
+            self.y = self.y + moveY
+        end
     else
-        self.x = self.x + moveX
+        if self.x > x then
+            self.x = self.x - moveX
+        else
+            self.x = self.x + moveX
+        end
     end
+    print('player x: ', x)
+    print('player y: ', y)
+    print('self x: ', self.x)
+    print('self y: ', self.y)
 end
 
 function fortuneClass:draw()
