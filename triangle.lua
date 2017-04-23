@@ -25,8 +25,6 @@ function triangleClass:draw()
 end
 
 function triangleClass:update(dt)
-    local width, height = love.graphics.getDimensions()
-
     if not (self.x1 == 0) then
         self.x1 = width
     end   

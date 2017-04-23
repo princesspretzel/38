@@ -4,7 +4,7 @@ local Player = require('player')
 local Triangle = require('triangle')
 
 local entities = { }
-local width, height = love.graphics.getDimensions()
+width, height = love.graphics.getDimensions()
 shrinkRate = 1
 chosen = ''
 errorMargin = 10
