@@ -1,0 +1,1 @@
+download love2d and clone this repo to enjoy (at most 30 seconds of) a game
