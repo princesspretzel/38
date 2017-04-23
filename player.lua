@@ -1,19 +1,34 @@
 local playerClass = { }
 playerClass.__index = playerClass
 
-function Player(x, y)
-    img = love.graphics.newImage('/images/skellyp.png')
-    local width, height = img:getDimensions( )
+function Player(x, y, image, imgWidth, imgHeight)
     local instance = {
         x = x,
         y = y,
-        w = width,
-        h = height,
+        w = imgWidth,
+        h = imgHeight,
         speed = 200,
         image = img
     }
     setmetatable(instance, playerClass)
     return instance
+end
+
+function playerClass:chooseImage(c)
+    local img = ''
+    if c == 'top' then
+        img = '/images/skellyt1.png'
+    end
+    if c == 'right' then
+        img = '/images/skellyt2.png'
+    end
+    if c == 'left' then
+        img = '/images/skellyt3.png'
+    end
+    if c == 'bottom' then
+        img = '/images/skellyt4.png'
+    end
+    return img
 end
 
 function playerClass:isOutOfBounds()
@@ -36,7 +51,8 @@ function playerClass:draw()
 end
 
 function playerClass:update(dt)
-   local dx, dy = 0, 0    
+
+    local dx, dy = 0, 0    
 
     if love.keyboard.isDown('left') then
         dx = -1

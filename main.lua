@@ -32,7 +32,10 @@ table.insert(entities, bottomFortune)
 level = Level(0, 0, 0)
 table.insert(entities, level)
 
-player = Player(width/2, height/2, 1)
+i = '/images/skellyt.png'
+img = love.graphics.newImage(i)
+local imgWidth, imgHeight = img:getDimensions( )
+player = Player(width/2, height/2, img, imgWidth, imgHeight)
 table.insert(entities, player)
 
 -- is a inside b?
@@ -105,6 +108,14 @@ function love.update(dt)
                 if entity.id == chosen then
                     entity.chosen = true
                 end
+            end
+            if entity.image then
+                local i = entity:chooseImage(chosen)
+                local img = love.graphics.newImage(i)
+                local iWidth, iHeight = img:getDimensions( )
+                entity.image = img
+                entity.w = iWidth
+                entity.h = iHeight
             end
         end
     end
