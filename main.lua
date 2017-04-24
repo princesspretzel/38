@@ -86,6 +86,7 @@ function setEndGame(time)
     love.graphics.setBackgroundColor(0, 0, 0)
     music:stop()
     endmusic = love.audio.newSource('/audio/endgame.mp3') 
+    love.audio.setVolume(.2)
     endmusic:setLooping(true)
     endmusic:play()
 end
