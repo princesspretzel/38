@@ -91,6 +91,15 @@ function setEndGame(time)
     endmusic:play()
 end
 
+function love.keypressed(key)
+    if key == "escape" then
+        love.event.quit()
+    end
+    if ((key == "return") and (ended == true)) then
+        love.event.quit()
+    end
+end
+
 function love.load()
     music = love.audio.newSource('/audio/gamemusic.mp3')
     music:setLooping(true)
