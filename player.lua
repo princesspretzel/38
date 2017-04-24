@@ -54,6 +54,27 @@ function playerClass:eggCream()
     return inside
 end
 
+function playerClass:death()
+    local i = ''
+    if chosen == 'top' then
+        i = '/images/ghostt1.png'
+    end
+    if chosen == 'right' then
+        i = '/images/ghostt2.png'
+    end
+    if chosen == 'left' then
+        i = '/images/ghostt3.png'
+    end
+    if chosen == 'bottom' then
+        i = '/images/ghostt4.png'
+    end            
+    local img = love.graphics.newImage(i)
+    local iWidth, iHeight = img:getDimensions( )
+    player.image = img
+    player.w = iWidth
+    player.h = iHeight 
+end
+
 function playerClass:draw()
     w, h = love.graphics.getDimensions() 
     if not (w < 200 and h < 200) then

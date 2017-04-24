@@ -107,6 +107,12 @@ function love.load()
 end
 
 function love.draw()
+    if not (w < 200 or h < 200) then
+        if ended then
+            player:death()
+        end
+        player:draw()
+    end
     if not (w < 200 or h < 200) and not ended then
         for idx, entity in ipairs(entities) do
             entity:draw()
@@ -117,55 +123,53 @@ function love.draw()
 end
 
 function love.update(dt)
-    if not ended then
-        for idx, entity in ipairs(entities) do
-            entity:update(dt)
-            
-            if player then 
-                if player:eggCream() then
-                    local img = love.graphics.newImage('/images/icecreamt.png')
-                    local iWidth, iHeight = img:getDimensions( )
-                    player.image = img
-                    player.w = iWidth
-                    player.h = iHeight 
-                    foundSecret = true
+    for idx, entity in ipairs(entities) do
+        entity:update(dt)
+        
+        if player then 
+            if player:eggCream() then
+                local img = love.graphics.newImage('/images/icecreamt.png')
+                local iWidth, iHeight = img:getDimensions( )
+                player.image = img
+                player.w = iWidth
+                player.h = iHeight 
+                foundSecret = true
+            end
+        end
+
+        if chosen == '' then
+            -- yucky way to determine if entity is a Fortune
+            if entity.text then
+                local touch = isTouching(player, entity)
+                if touch then
+                    -- move player away after the choice is made
+                    player.x = width/2
+                    player.y = height/2
+                    chosen = entity.id
                 end
             end
-
-            if chosen == '' then
-                -- yucky way to determine if entity is a Fortune
-                if entity.text then
-                    local touch = isTouching(player, entity)
-                    if touch then
-                        -- move player away after the choice is made
-                        player.x = width/2
-                        player.y = height/2
-                        chosen = entity.id
-                    end
+        else
+            -- yucky way to determine if entity is a Fortune
+            if (entity.x3 and entity.y3) then
+                if entity.id == chosen then
+                    entity.chosen = true
                 end
-            else
-                -- yucky way to determine if entity is a Fortune
-                if (entity.x3 and entity.y3) then
-                    if entity.id == chosen then
-                        entity.chosen = true
-                    end
-                end
-                if (player and (not foundSecret)) then
-                    local i = player:chooseImage(chosen)
-                    local img = love.graphics.newImage(i)
-                    local iWidth, iHeight = img:getDimensions( )
-                    player.image = img
-                    player.w = iWidth
-                    player.h = iHeight
-                end
-                if entity.text and (entity.id == chosen) then
-                    local touch = isTouching(player, entity)
-                    if touch then
-                        ended = true
-                        current = math.floor(love.timer.getTime() - start)
-                    else
-                        entity:chase(player.x, player.y)
-                    end
+            end
+            if (player and (not foundSecret)) then
+                local i = player:chooseImage(chosen)
+                local img = love.graphics.newImage(i)
+                local iWidth, iHeight = img:getDimensions( )
+                player.image = img
+                player.w = iWidth
+                player.h = iHeight
+            end
+            if entity.text and (entity.id == chosen) then
+                local touch = isTouching(player, entity)
+                if touch then
+                    ended = true
+                    current = math.floor(love.timer.getTime() - start)
+                else
+                    entity:chase(player.x, player.y)
                 end
             end
         end
