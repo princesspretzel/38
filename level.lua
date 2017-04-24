@@ -26,7 +26,7 @@ function levelClass:update(dt)
             self.title = 'prepare for the takeover of your small small world'
         end
         if foundSecret then
-            self.title = 'this will take the edge off'
+            self.title = 'aww you found the secret spot! :)'
         end
         self.backgroundR = 255        
         self.backgroundG = 102
@@ -34,12 +34,12 @@ function levelClass:update(dt)
     end
     if w < 400 or h < 400 then
         if not (chosen == '') then
-            self.title = 'don\'t make a big deal'
+            self.title = 'don\'t make a big fart deal'
         else
             self.title = 'is it getting stuffy in here or wut'
         end
         if foundSecret then
-            self.title = 'tastes good enough to forget'
+            self.title = 'this will take the edge off'
         end
         self.backgroundR = 255        
         self.backgroundG = 102
@@ -47,12 +47,12 @@ function levelClass:update(dt)
     end
     if w < 300 or h < 300 then
         if not (chosen == '') then
-            self.title = 'indecision or laziness?'
+            self.title = 'indecision or laziness'
         else
             self.title = 'it\'s coming'
         end
         if foundSecret then
-            self.title = 'i\'m melting'
+            self.title = 'tastes good enough to forget'
         end
         self.backgroundR = 255        
         self.backgroundG = 102
@@ -65,14 +65,18 @@ function levelClass:update(dt)
             self.title = 'some choices are made for us'
         end
         if foundSecret then
-            self.title = 'nothing lasts'
+            self.title = 'i\'m melting nothing lasts'
         end
         self.backgroundR = 255        
         self.backgroundG = 255
         self.backgroundB = 204
     end
     if w < 100 or h < 100 then
-        self.title = 'it\'s all there is'
+        if foundSecret then
+            self.title = 'i\'m melting nothing lasts'
+        else
+            self.title = 'it\'s all there is'
+        end
         self.backgroundR = 0
         self.backgroundG = 0
         self.backgroundB = 0
