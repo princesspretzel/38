@@ -96,7 +96,7 @@ function love.keypressed(key)
         love.event.quit()
     end
     if ((key == "return") and (ended == true)) then
-        love.event.quit()
+        love.event.quit("restart")
     end
 end
 
